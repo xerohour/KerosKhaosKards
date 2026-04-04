@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="description" content="Kero's Khaos Kards - A magical girl themed card game inspired by Card Captor Sakura. Play with enchanted cards infused with celestial magic!" />
+  <meta name="theme-color" content="#FF69B4" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Kero's Khaos Kards" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+  <link rel="icon" type="image/png" href="/icons/icon-192.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <title>Kero's Khaos Kards ✨ Magical Card Game</title>
+</head>
+<body>
+  <div id="app">
+    <!-- Sakura petals layer -->
+    <div id="sakura-container" aria-hidden="true"></div>
+
+    <!-- Sparkle overlay -->
+    <div id="sparkle-overlay" aria-hidden="true"></div>
+
+    <!-- Header -->
+    <header id="app-header">
+      <div class="header-stars" aria-hidden="true">
+        <span class="star star-1">✦</span>
+        <span class="star star-2">✧</span>
+        <span class="star star-3">✦</span>
+      </div>
+      <div class="header-content">
+        <div class="moon-icon" aria-hidden="true">☽</div>
+        <h1 id="main-title">
+          <span class="title-kero">Kero's</span>
+          <span class="title-khaos">Khaos</span>
+          <span class="title-kards">Kards</span>
+        </h1>
+        <div class="sun-icon" aria-hidden="true">☀</div>
+      </div>
+      <p class="subtitle">~ Release the Cards! ~</p>
+      <div class="geocities-banner" aria-hidden="true">
+        <span class="blink">★</span>
+        <span class="marquee-text">Welcome to the Magical Realm of Kero's Khaos Kards!</span>
+        <span class="blink">★</span>
+      </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav id="main-nav">
+      <button class="nav-btn active" data-view="collection" id="nav-collection">
+        <span class="nav-icon">🃏</span>
+        <span class="nav-label">Collection</span>
+      </button>
+      <button class="nav-btn" data-view="play" id="nav-play">
+        <span class="nav-icon">⚔️</span>
+        <span class="nav-label">Play</span>
+      </button>
+      <button class="nav-btn" data-view="gallery" id="nav-gallery">
+        <span class="nav-icon">🌙</span>
+        <span class="nav-label">Gallery</span>
+      </button>
+      <button class="nav-btn" data-view="about" id="nav-about">
+        <span class="nav-icon">🔮</span>
+        <span class="nav-label">About</span>
+      </button>
+    </nav>
+
+    <!-- Main content -->
+    <main id="main-content">
+      <!-- Collection View -->
+      <section id="view-collection" class="view active">
+        <div class="view-header">
+          <h2>✨ Card Collection ✨</h2>
+          <div class="filter-bar">
+            <input type="text" id="search-cards" placeholder="Search cards..." class="search-input" />
+            <select id="sort-cards" class="sort-select">
+              <option value="number">By Number</option>
+              <option value="random">Random</option>
+            </select>
+          </div>
+        </div>
+        <div id="card-grid" class="card-grid"></div>
+      </section>
+
+      <!-- Play View -->
+      <section id="view-play" class="view">
+        <div class="view-header">
+          <h2>⚔️ Card Battle ⚔️</h2>
+        </div>
+        <div class="play-area">
+          <div class="battle-field">
+            <div class="player-zone opponent-zone">
+              <h3>Opponent</h3>
+              <div id="opponent-card" class="battle-card-slot">
+                <div class="card-placeholder">?</div>
+              </div>
+              <div class="hp-bar">
+                <div class="hp-fill opponent-hp" style="width: 100%"></div>
+              </div>
+            </div>
+            <div class="vs-badge">VS</div>
+            <div class="player-zone player-zone-self">
+              <h3>You</h3>
+              <div id="player-card" class="battle-card-slot">
+                <div class="card-placeholder">?</div>
+              </div>
+              <div class="hp-bar">
+                <div class="hp-fill player-hp" style="width: 100%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="battle-controls">
+            <button id="btn-draw" class="magic-btn">🌸 Draw Card</button>
+            <button id="btn-battle" class="magic-btn" disabled>⚡ Battle!</button>
+            <button id="btn-reset" class="magic-btn secondary">🔄 New Game</button>
+          </div>
+          <div id="battle-log" class="battle-log"></div>
+        </div>
+      </section>
+
+      <!-- Gallery View -->
+      <section id="view-gallery" class="view">
+        <div class="view-header">
+          <h2>🌙 Card Gallery 🌙</h2>
+        </div>
+        <div id="gallery-viewer" class="gallery-viewer">
+          <button id="gallery-prev" class="gallery-nav-btn">&laquo;</button>
+          <div id="gallery-card-display" class="gallery-card-display">
+            <div class="gallery-card-wrapper">
+              <div id="gallery-card" class="gallery-card">
+                <div class="gallery-card-front"></div>
+                <div class="gallery-card-back"></div>
+              </div>
+            </div>
+            <p id="gallery-card-info" class="gallery-card-info">Click a card to flip it!</p>
+          </div>
+          <button id="gallery-next" class="gallery-nav-btn">&raquo;</button>
+        </div>
+        <div id="gallery-thumbnails" class="gallery-thumbnails"></div>
+      </section>
+
+      <!-- About View -->
+      <section id="view-about" class="view">
+        <div class="about-content">
+          <div class="about-card glass-card">
+            <div class="geocities-divider" aria-hidden="true">
+              <span>☆</span><span>★</span><span>☆</span><span>★</span><span>☆</span>
+            </div>
+            <h2>About Kero's Khaos Kards</h2>
+            <div class="geocities-divider" aria-hidden="true">
+              <span>☆</span><span>★</span><span>☆</span><span>★</span><span>☆</span>
+            </div>
+            <p>Welcome, young magician! ✨</p>
+            <p>Kero's Khaos Kards is a magical card game inspired by the enchanted world of Card Captor Sakura. Collect all 72 mystical cards, each imbued with unique celestial energy!</p>
+            <div class="about-features">
+              <div class="feature-item">
+                <span class="feature-icon">🌸</span>
+                <h3>Collect</h3>
+                <p>Discover and collect all 72 enchanted cards</p>
+              </div>
+              <div class="feature-item">
+                <span class="feature-icon">⚔️</span>
+                <h3>Battle</h3>
+                <p>Draw cards and battle against magical opponents</p>
+              </div>
+              <div class="feature-item">
+                <span class="feature-icon">🌙</span>
+                <h3>Explore</h3>
+                <p>Browse your collection in the mystical gallery</p>
+              </div>
+            </div>
+            <div class="geocities-footer" aria-hidden="true">
+              <p class="blink">~ Best viewed with magical powers ~</p>
+              <p>Made with 💖 and ✨ | Est. 2026</p>
+              <div class="visitor-counter">
+                <span class="counter-label">Visitors:</span>
+                <span class="counter-digits" id="visitor-count">000042</span>
+              </div>
+              <p class="geocities-badge">
+                <span class="badge-text">🌐 Hosted on the Magical Web 🌐</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Card Modal -->
+    <div id="card-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-backdrop"></div>
+      <div class="modal-content glass-card">
+        <button id="modal-close" class="modal-close" aria-label="Close">&times;</button>
+        <div class="modal-card-wrapper">
+          <div id="modal-card" class="modal-card">
+            <div id="modal-card-front" class="modal-card-face front"></div>
+            <div id="modal-card-back" class="modal-card-face back"></div>
+          </div>
+        </div>
+        <h3 id="modal-title" class="modal-title"></h3>
+        <p id="modal-description" class="modal-description"></p>
+        <button id="modal-flip" class="magic-btn">🔄 Flip Card</button>
+      </div>
+    </div>
+
+    <!-- Install prompt -->
+    <div id="install-prompt" class="install-prompt hidden">
+      <p>✨ Install Kero's Khaos Kards on your device!</p>
+      <div class="install-actions">
+        <button id="install-btn" class="magic-btn">📲 Install</button>
+        <button id="install-dismiss" class="magic-btn secondary">Maybe Later</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

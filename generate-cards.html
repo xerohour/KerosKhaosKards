@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head><title>Card Generator</title></head>
+<body>
+<script>
+// Generates 72 card front+back PNGs with random RGB-colored numbers
+// Run this in a browser, it will auto-download all 144 images
+const W = 300, H = 420;
+
+function randomColor() {
+  const r = Math.floor(Math.random() * 256);
+  const g = Math.floor(Math.random() * 256);
+  const b = Math.floor(Math.random() * 256);
+  return `rgb(${r},${g},${b})`;
+}
+
+function drawCard(canvas, num, isFront) {
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, W, H);
+
+  // Card background
+  const grad = ctx.createLinearGradient(0, 0, W, H);
+  if (isFront) {
+    grad.addColorStop(0, '#FFB7D5');
+    grad.addColorStop(1, '#FFF0F5');
+  } else {
+    grad.addColorStop(0, '#D4A5FF');
+    grad.addColorStop(1, '#F0E6FF');
+  }
+  ctx.fillStyle = grad;
+  ctx.beginPath();
+  ctx.roundRect(0, 0, W, H, 16);
+  ctx.fill();
+
+  // Border
+  ctx.strokeStyle = isFront ? '#FF69B4' : '#9B59B6';
+  ctx.lineWidth = 4;
+  ctx.beginPath();
+  ctx.roundRect(4, 4, W - 8, H - 8, 14);
+  ctx.stroke();
+
+  // Inner decorative border
+  ctx.strokeStyle = isFront ? '#FFD700' : '#C0C0C0';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.roundRect(16, 16, W - 32, H - 32, 10);
+  ctx.stroke();
+
+  // Stars in corners
+  const starPositions = [[30, 30], [W-30, 30], [30, H-30], [W-30, H-30]];
+  ctx.fillStyle = isFront ? '#FFD700' : '#C0C0C0';
+  ctx.font = '16px serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  starPositions.forEach(([x, y]) => ctx.fillText('★', x, y));
+
+  // Number with random color
+  const color = randomColor();
+  ctx.fillStyle = color;
+  ctx.font = 'bold 120px "Georgia", serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(String(num), W / 2, H / 2);
+
+  // Number outline for readability
+  ctx.strokeStyle = 'rgba(0,0,0,0.3)';
+  ctx.lineWidth = 2;
+  ctx.strokeText(String(num), W / 2, H / 2);
+
+  // Label
+  ctx.fillStyle = isFront ? '#FF69B4' : '#9B59B6';
+  ctx.font = '14px Georgia, serif';
+  ctx.fillText(isFront ? 'FRONT' : 'BACK', W / 2, H - 40);
+}
+
+async function generateAll() {
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+
+  const status = document.createElement('div');
+  status.style.cssText = 'font-family:sans-serif;padding:20px;font-size:18px;';
+  document.body.appendChild(status);
+
+  for (let i = 1; i <= 72; i++) {
+    // Front
+    drawCard(canvas, i, true);
+    const frontBlob = await new Promise(r => canvas.toBlob(r, 'image/png'));
+    const frontUrl = URL.createObjectURL(frontBlob);
+    const a1 = document.createElement('a');
+    a1.href = frontUrl;
+    a1.download = `card_${String(i).padStart(2,'0')}_front.png`;
+    a1.click();
+    URL.revokeObjectURL(frontUrl);
+
+    // Back
+    drawCard(canvas, i, false);
+    const backBlob = await new Promise(r => canvas.toBlob(r, 'image/png'));
+    const backUrl = URL.createObjectURL(backBlob);
+    const a2 = document.createElement('a');
+    a2.href = backUrl;
+    a2.download = `card_${String(i).padStart(2,'0')}_back.png`;
+    a2.click();
+    URL.revokeObjectURL(backUrl);
+
+    status.textContent = `Generated card ${i}/72 (front + back)...`;
+    await new Promise(r => setTimeout(r, 100));
+  }
+  status.textContent = 'Done! All 144 card images generated.';
+}
+
+generateAll();
+</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "keroskhaoskards",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Kero's Khaos Kards - A magical girl themed card game web app (PWA)",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "generate:cards": "node scripts/generate-cards.mjs",
+    "generate:icons": "node scripts/generate-icons.mjs",
+    "generate": "npm run generate:cards && npm run generate:icons"
+  },
+  "devDependencies": {
+    "canvas": "^3.2.3",
+    "vite": "^8.0.1"
+  }
+}
