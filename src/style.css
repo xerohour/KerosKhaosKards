@@ -514,137 +514,220 @@ body {
   text-align: center;
 }
 
-/* ============ PLAY AREA ============ */
+/* ============ PLAY AREA (NEW) ============ */
 
-.play-area {
-  max-width: 600px;
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  max-width: 900px;
   margin: 0 auto;
 }
 
-.battle-field {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-md);
-  padding: var(--space-xl);
-  background: var(--bg-glass);
-  border-radius: var(--radius-lg);
-  border: 1px solid rgba(255, 105, 180, 0.15);
-  margin-bottom: var(--space-lg);
-}
-
-.player-zone {
+.hand-container {
+  width: 100%;
   text-align: center;
-  flex: 1;
 }
 
-.player-zone h3 {
+.hand-label {
   font-family: var(--font-display);
   color: var(--sakura-300);
   font-size: 0.9rem;
   margin-bottom: var(--space-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
-.battle-card-slot {
-  width: 100px;
-  height: 140px;
-  margin: 0 auto var(--space-sm);
+.hand {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-sm);
+  min-height: 120px;
+  padding: var(--space-sm);
+  background: rgba(255, 105, 180, 0.05);
+  border-radius: var(--radius-md);
+}
+
+.game-card {
+  width: 80px;
+  height: 112px;
+  position: relative;
   border-radius: var(--radius-sm);
   overflow: hidden;
-  border: 2px dashed rgba(255, 105, 180, 0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  cursor: pointer;
   transition: all var(--transition-normal);
+  box-shadow: var(--shadow-card);
+  background: #1a0a2e;
 }
 
-.battle-card-slot img {
+.game-card:hover {
+  transform: translateY(-10px) scale(1.1);
+  box-shadow: var(--shadow-elevated);
+  z-index: 10;
+}
+
+.game-card.selected {
+  outline: 3px solid var(--gold-400);
+  transform: translateY(-15px) scale(1.1);
+  box-shadow: var(--shadow-glow-gold);
+}
+
+.game-card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.card-placeholder {
-  font-size: 2rem;
-  color: rgba(255, 105, 180, 0.3);
-  font-family: var(--font-display);
-}
-
-.battle-card-slot.filled {
-  border-style: solid;
-  border-color: var(--sakura-500);
-  box-shadow: 0 0 15px rgba(255, 105, 180, 0.3);
-  animation: cardGlow 2s ease-in-out infinite;
-}
-
-@keyframes cardGlow {
-  0%, 100% { box-shadow: 0 0 15px rgba(255, 105, 180, 0.3); }
-  50% { box-shadow: 0 0 25px rgba(255, 105, 180, 0.5), 0 0 50px rgba(255, 105, 180, 0.2); }
-}
-
-.vs-badge {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 900;
-  color: var(--gold-300);
-  text-shadow: 0 0 15px rgba(255, 213, 79, 0.5);
-  animation: vsPulse 2s ease-in-out infinite;
-}
-
-@keyframes vsPulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.15); }
-}
-
-.hp-bar {
-  width: 100%;
-  height: 8px;
-  background: rgba(0, 0, 0, 0.3);
+.card-stats {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  display: grid;
+  grid-template-areas: 
+    ". top ."
+    "left . right"
+    ". bottom .";
+  gap: 2px;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 2px;
   border-radius: 4px;
-  overflow: hidden;
+  font-size: 10px;
+  color: white;
+  font-weight: bold;
+  pointer-events: none;
 }
 
-.hp-fill {
-  height: 100%;
-  border-radius: 4px;
-  transition: width 0.5s ease;
-}
+.stat-t { grid-area: top; text-align: center; }
+.stat-r { grid-area: right; text-align: center; }
+.stat-b { grid-area: bottom; text-align: center; }
+.stat-l { grid-area: left; text-align: center; }
 
-.player-hp {
-  background: linear-gradient(90deg, var(--sakura-500), var(--sakura-300));
-}
-
-.opponent-hp {
-  background: linear-gradient(90deg, var(--moon-400), var(--moon-300));
-}
-
-.battle-controls {
+.board-wrapper {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: var(--space-sm);
+}
+
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 140px);
+  gap: 10px;
+  padding: 15px;
+  background: rgba(255, 105, 180, 0.1);
+  border: 2px solid rgba(255, 105, 180, 0.3);
+  border-radius: var(--radius-lg);
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.board-slot {
+  width: 100px;
+  height: 140px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px dashed rgba(255, 105, 180, 0.2);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
-  margin-bottom: var(--space-lg);
+  transition: background var(--transition-normal);
 }
 
-.battle-log {
-  background: var(--bg-glass);
-  border: 1px solid rgba(255, 105, 180, 0.15);
-  border-radius: var(--radius-md);
-  padding: var(--space-md);
-  max-height: 200px;
-  overflow-y: auto;
-  font-size: 0.8rem;
-  line-height: 1.8;
+.board-slot:hover {
+  background: rgba(255, 105, 180, 0.1);
 }
 
-.battle-log p {
-  padding: var(--space-xs) 0;
-  border-bottom: 1px solid rgba(255, 105, 180, 0.05);
+.board-slot .game-card {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: default;
 }
 
-.battle-log .win { color: var(--gold-300); }
-.battle-log .lose { color: var(--moon-300); }
-.battle-log .draw { color: var(--sakura-300); }
+.board-slot .game-card:hover {
+  transform: none;
+}
+
+.player-owned {
+  border: 2px solid var(--sakura-500);
+  box-shadow: 0 0 10px var(--sakura-500);
+}
+
+.opponent-owned {
+  border: 2px solid var(--moon-400);
+  box-shadow: 0 0 10px var(--moon-400);
+}
+
+.caravan-scores {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  max-width: 320px;
+}
+
+.caravan-col {
+  text-align: center;
+  padding: var(--space-xs) var(--space-sm);
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: var(--radius-sm);
+  min-width: 60px;
+}
+
+.caravan-label {
+  font-size: 0.7rem;
+  color: var(--sakura-300);
+  margin-bottom: 2px;
+}
+
+.score-value {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--gold-300);
+}
+
+.score-value.sold {
+  color: #4CAF50;
+  text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+}
+
+.score-value.too-high {
+  color: #F44336;
+}
+
+.battle-status {
+  text-align: center;
+  margin-top: var(--space-md);
+}
+
+.turn-indicator {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--sakura-300);
+  margin-bottom: var(--space-xs);
+}
+
+.game-score {
+  font-size: 0.9rem;
+  color: var(--gold-200);
+}
+
+@media (max-width: 768px) {
+  .game-board {
+    grid-template-columns: repeat(3, 80px);
+    grid-template-rows: repeat(3, 112px);
+  }
+  
+  .board-slot {
+    width: 80px;
+    height: 112px;
+  }
+  
+  .game-card {
+    width: 60px;
+    height: 84px;
+  }
+}
 
 /* ============ BUTTONS ============ */
 

@@ -88,35 +88,61 @@
       <!-- Play View -->
       <section id="view-play" class="view">
         <div class="view-header">
-          <h2>⚔️ Card Battle ⚔️</h2>
+          <h2>⚔️ Khaos Kards Battle ⚔️</h2>
         </div>
-        <div class="play-area">
-          <div class="battle-field">
-            <div class="player-zone opponent-zone">
-              <h3>Opponent</h3>
-              <div id="opponent-card" class="battle-card-slot">
-                <div class="card-placeholder">?</div>
-              </div>
-              <div class="hp-bar">
-                <div class="hp-fill opponent-hp" style="width: 100%"></div>
-              </div>
+        <div class="game-container">
+          <!-- Opponent Hand -->
+          <div class="hand-container">
+            <h3 class="hand-label">Opponent</h3>
+            <div id="opponent-hand" class="hand"></div>
+          </div>
+
+          <!-- Board and Caravan scores -->
+          <div class="board-wrapper">
+            <div id="game-board" class="game-board">
+              <div class="board-slot" data-index="0"></div>
+              <div class="board-slot" data-index="1"></div>
+              <div class="board-slot" data-index="2"></div>
+              <div class="board-slot" data-index="3"></div>
+              <div class="board-slot" data-index="4"></div>
+              <div class="board-slot" data-index="5"></div>
+              <div class="board-slot" data-index="6"></div>
+              <div class="board-slot" data-index="7"></div>
+              <div class="board-slot" data-index="8"></div>
             </div>
-            <div class="vs-badge">VS</div>
-            <div class="player-zone player-zone-self">
-              <h3>You</h3>
-              <div id="player-card" class="battle-card-slot">
-                <div class="card-placeholder">?</div>
+            
+            <div class="caravan-scores">
+              <div class="caravan-col">
+                <div class="caravan-label">C1</div>
+                <div id="score-col-0" class="score-value">0</div>
               </div>
-              <div class="hp-bar">
-                <div class="hp-fill player-hp" style="width: 100%"></div>
+              <div class="caravan-col">
+                <div class="caravan-label">C2</div>
+                <div id="score-col-1" class="score-value">0</div>
+              </div>
+              <div class="caravan-col">
+                <div class="caravan-label">C3</div>
+                <div id="score-col-2" class="score-value">0</div>
               </div>
             </div>
           </div>
+
+          <!-- Player Hand -->
+          <div class="hand-container">
+            <h3 class="hand-label">Your Hand</h3>
+            <div id="player-hand" class="hand"></div>
+          </div>
+
           <div class="battle-controls">
-            <button id="btn-draw" class="magic-btn">🌸 Draw Card</button>
-            <button id="btn-battle" class="magic-btn" disabled>⚡ Battle!</button>
+            <button id="btn-start" class="magic-btn">✨ Start Battle</button>
             <button id="btn-reset" class="magic-btn secondary">🔄 New Game</button>
           </div>
+
+          <div id="battle-status" class="battle-status">
+            <div id="turn-indicator" class="turn-indicator">Waiting to start...</div>
+            <div id="game-score" class="game-score">P1: 0 | CPU: 0</div>
+          </div>
+          
           <div id="battle-log" class="battle-log"></div>
         </div>
       </section>
