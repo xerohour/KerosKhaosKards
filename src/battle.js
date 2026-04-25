@@ -47,7 +47,8 @@ export function initBattle(totalCards) {
     selectedCardIdx: null,
     gameActive: false,
     scores: { player: 0, opponent: 0 },
-    caravans: [0, 0, 0] // Sums of columns
+    caravans: [0, 0, 0], // Sums of columns
+    lastMoveIndex: null
   };
 
   function log(msg, cls) {
@@ -63,19 +64,36 @@ export function initBattle(totalCards) {
     renderHand(playerHandEl, gameState.playerHand, true);
     renderHand(opponentHandEl, gameState.opponentHand, false);
 
+    // Refresh caravan totals before decorating the board.
+    calculateCaravans();
+
     // Update board
     boardSlots.forEach((slot, i) => {
       const card = gameState.board[i];
+      const column = i % 3;
+      const caravanValue = gameState.caravans[column];
+      const isSold = caravanValue >= 21 && caravanValue <= 26;
+      const isOverflow = caravanValue > 26;
+
+      slot.dataset.slotLabel = String(i + 1).padStart(2, '0');
+      slot.classList.toggle('occupied', Boolean(card));
+      slot.classList.toggle('empty', !card);
+      slot.classList.toggle('player-owned', card?.owner === 'player');
+      slot.classList.toggle('opponent-owned', card?.owner === 'opponent');
+      slot.classList.toggle('recently-played', gameState.lastMoveIndex === i);
+      slot.classList.toggle('column-sold', isSold);
+      slot.classList.toggle('column-overflow', isOverflow);
       slot.innerHTML = '';
       if (card) {
-        const cardEl = createCardElement(card);
-        cardEl.classList.add(card.owner === 'player' ? 'player-owned' : 'opponent-owned');
+        const cardEl = createCardElement(card, {
+          board: true,
+          recent: gameState.lastMoveIndex === i
+        });
         slot.appendChild(cardEl);
       }
     });
 
     // Update scores and caravans
-    calculateCaravans();
     updateCaravanUI();
     
     // Overall score (Triple Triad style - board control)
@@ -90,18 +108,15 @@ export function initBattle(totalCards) {
     turnIndicator.textContent = gameState.gameActive 
       ? (gameState.turn === 'player' ? "Your Turn" : "Opponent Thinking...") 
       : "Game Over";
-      
-    if (gameState.turn === 'player') {
-      turnIndicator.style.color = 'var(--sakura-400)';
-    } else {
-      turnIndicator.style.color = 'var(--moon-300)';
-    }
+    turnIndicator.classList.toggle('player-turn', gameState.gameActive && gameState.turn === 'player');
+    turnIndicator.classList.toggle('opponent-turn', gameState.gameActive && gameState.turn === 'opponent');
+    turnIndicator.classList.toggle('game-over', !gameState.gameActive);
   }
 
   function renderHand(container, hand, isPlayer) {
     container.innerHTML = '';
     hand.forEach((card, i) => {
-      const cardEl = createCardElement(card);
+      const cardEl = createCardElement(card, { board: false });
       if (isPlayer) {
         if (gameState.selectedCardIdx === i) cardEl.classList.add('selected');
         cardEl.addEventListener('click', () => {
@@ -115,16 +130,24 @@ export function initBattle(totalCards) {
         if (img) img.src = cardPath(card.num, 'back');
         const stats = cardEl.querySelector('.card-stats');
         if (stats) stats.style.display = 'none';
+        cardEl.classList.add('face-down');
       }
       container.appendChild(cardEl);
     });
   }
 
-  function createCardElement(card) {
+  function createCardElement(card, options = {}) {
     const el = document.createElement('div');
     el.className = 'game-card';
+    el.dataset.owner = card.owner || '';
+    el.dataset.rank = String(card.stats.rank);
+    if (card.owner === 'player') el.classList.add('owner-player');
+    if (card.owner === 'opponent') el.classList.add('owner-opponent');
+    if (options.board) el.classList.add('board-card');
+    if (options.recent) el.classList.add('recently-played');
     el.innerHTML = `
       <img src="${cardPath(card.num, 'front')}" />
+      <div class="card-rank-badge" aria-hidden="true">${card.stats.rank}</div>
       <div class="card-stats">
         <div class="stat-t">${card.stats.t}</div>
         <div class="stat-r">${card.stats.r}</div>
@@ -146,6 +169,18 @@ export function initBattle(totalCards) {
       }
     }
     gameState.caravans = cols;
+  }
+
+  function getFinalScores() {
+    let pCount = gameState.playerHand.length;
+    let oCount = gameState.opponentHand.length;
+
+    gameState.board.forEach(c => {
+      if (c?.owner === 'player') pCount++;
+      else if (c?.owner === 'opponent') oCount++;
+    });
+
+    return { pCount, oCount };
   }
 
   function updateCaravanUI() {
@@ -176,6 +211,7 @@ export function initBattle(totalCards) {
 
     card.owner = gameState.turn;
     gameState.board[boardIdx] = card;
+    gameState.lastMoveIndex = boardIdx;
     
     log(`✨ ${gameState.turn === 'player' ? 'You' : 'Opponent'} placed card at slot ${boardIdx + 1}`);
     
@@ -241,17 +277,16 @@ export function initBattle(totalCards) {
 
   function endGame() {
     gameState.gameActive = false;
-    
-    // Score calculation
-    let pCount = 0;
-    let oCount = 0;
-    gameState.board.forEach(c => {
-      if (c.owner === 'player') pCount++;
-      else oCount++;
-    });
 
-    // Caravan bonus? 
-    // Let's say each "sold" caravan column adds 2 points to the owner of the most cards in that column
+    // Refresh caravan totals before applying end-game bonuses.
+    calculateCaravans();
+    updateCaravanUI();
+
+    const totals = getFinalScores();
+    let pCount = totals.pCount;
+    let oCount = totals.oCount;
+
+    // Caravan bonus: each sold column adds 2 points to the side with majority control there.
     gameState.caravans.forEach((val, i) => {
       if (val >= 21 && val <= 26) {
         // Who has more cards in this column?
@@ -297,6 +332,7 @@ export function initBattle(totalCards) {
     gameState.turn = Math.random() > 0.5 ? 'player' : 'opponent';
     gameState.gameActive = true;
     gameState.selectedCardIdx = null;
+    gameState.lastMoveIndex = null;
     
     if (battleLog) battleLog.innerHTML = '';
     log('🌸 A new magical battle begins! Good luck!');
@@ -314,6 +350,7 @@ export function initBattle(totalCards) {
     gameState.board = Array(9).fill(null);
     gameState.playerHand = [];
     gameState.opponentHand = [];
+    gameState.lastMoveIndex = null;
     updateUI();
     btnStart.disabled = false;
     if (battleLog) battleLog.innerHTML = '';
