@@ -71,31 +71,39 @@ export function initGallery() {
   if (!display || !frontFace || !backFace || !thumbs) return;
 
   let currentIndex = 0;
+  let isShowingBack = false;
 
-  function showCard(index) {
-    currentIndex = index;
-    const card = cardData[index];
-    display.classList.remove('flipped');
-    display.classList.toggle('card-foil', card.isFoil);
+   function showCard(index, showBack = false) {
+     currentIndex = index;
+     const card = cardData[index];
+     isShowingBack = showBack;
+     display.classList.toggle('card-foil', card.isFoil);
 
-    frontFace.innerHTML = `<img src="${cardPath(card, 'front')}" alt="Card #${card.num} Front" />`;
-    backFace.innerHTML = `<img src="${cardPath(card, 'back')}" alt="Card #${card.num} Back" />`;
+     if (showBack) {
+       // Show back: frontFace shows back image, backFace shows front image (but hidden by transform)
+       frontFace.innerHTML = `<img src="${cardPath(card, 'back')}" alt="Card #${card.num} Back" />`;
+       backFace.innerHTML = `<img src="${cardPath(card, 'front')}" alt="Card #${card.num} Front" />`;
+       if (info) info.textContent = `#${card.num}${card.variant ? ' ' + card.variant : ''} — ${card.name}${card.isFoil ? ' (Foil)' : ''} (Back) | Click to show front!`;
+     } else {
+       // Show front: frontFace shows front image, backFace shows back image (but hidden by transform)
+       frontFace.innerHTML = `<img src="${cardPath(card, 'front')}" alt="Card #${card.num} Front" />`;
+       backFace.innerHTML = `<img src="${cardPath(card, 'back')}" alt="Card #${card.num} Back" />`;
+       if (info) info.textContent = `#${card.num}${card.variant ? ' ' + card.variant : ''} — ${card.name}${card.isFoil ? ' (Foil)' : ''} | Click to show back!`;
+     }
 
-    if (info) info.textContent = `#${card.num}${card.variant ? ' ' + card.variant : ''} — ${card.name}${card.isFoil ? ' (Foil)' : ''} | Click to flip!`;
-
-    thumbs.querySelectorAll('.gallery-thumb').forEach((t, i) => {
-      t.classList.toggle('active', i === index);
-    });
-    
-    // Scroll thumbnail into view
-    const activeThumb = thumbs.querySelector('.gallery-thumb.active');
-    if (activeThumb) {
-      activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-    }
-  }
+     thumbs.querySelectorAll('.gallery-thumb').forEach((t, i) => {
+       t.classList.toggle('active', i === index);
+     });
+     
+     // Scroll thumbnail into view
+     const activeThumb = thumbs.querySelector('.gallery-thumb.active');
+     if (activeThumb) {
+       activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+     }
+   }
 
   display.addEventListener('click', () => {
-    display.classList.toggle('flipped');
+    showCard(currentIndex, !isShowingBack);
   });
 
   thumbs.innerHTML = '';
@@ -110,15 +118,15 @@ export function initGallery() {
 
   prevBtn?.addEventListener('click', () => {
     const nextIdx = (currentIndex - 1 + cardData.length) % cardData.length;
-    showCard(nextIdx);
+    showCard(nextIdx, false); // Always show front when navigating
   });
 
   nextBtn?.addEventListener('click', () => {
     const nextIdx = (currentIndex + 1) % cardData.length;
-    showCard(nextIdx);
+    showCard(nextIdx, false); // Always show front when navigating
   });
 
-  showCard(0);
+  showCard(0, false); // Start with front showing
 }
 
 export function initModal() {
@@ -132,7 +140,33 @@ export function initModal() {
 
   closeBtn?.addEventListener('click', () => modal.classList.remove('active'));
   backdrop?.addEventListener('click', () => modal.classList.remove('active'));
-  flipBtn?.addEventListener('click', () => cardEl?.classList.toggle('flipped'));
+  
+  // Track flip state for modal
+  let isModalFlipped = false;
+  flipBtn?.addEventListener('click', () => {
+    isModalFlipped = !isModalFlipped;
+    if (isModalFlipped) {
+      // Show back
+      const backImg = document.getElementById('modal-card-back');
+      const frontImg = document.getElementById('modal-card-front');
+      if (backImg && frontImg) {
+        // Swap the images - show back on front side
+        const backSrc = backImg.src;
+        backImg.src = frontImg.src;
+        frontImg.src = backSrc;
+      }
+    } else {
+      // Show front
+      const backImg = document.getElementById('modal-card-back');
+      const frontImg = document.getElementById('modal-card-front');
+      if (backImg && frontImg) {
+        // Swap back to show front
+        const frontSrc = frontImg.src;
+        frontImg.src = backImg.src;
+        backImg.src = frontSrc;
+      }
+    }
+  });
 
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') modal.classList.remove('active');
@@ -149,9 +183,7 @@ function openModal(card) {
 
   if (!modal || !front || !back) return;
 
-  cardEl?.classList.remove('flipped');
-  cardEl?.classList.toggle('card-foil', card.isFoil);
-
+  // Always show front first when opening modal
   front.innerHTML = `<img src="${cardPath(card, 'front')}" alt="${card.name} Front" />`;
   back.innerHTML = `<img src="${cardPath(card, 'back')}" alt="${card.name} Back" />`;
   

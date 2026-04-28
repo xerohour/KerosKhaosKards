@@ -3,6 +3,7 @@ import { createSakuraPetals } from './sakura.js';
 import { initCardGrid, initGallery, initModal } from './cards.js';
 import { initBattle } from './battle.js';
 import { registerServiceWorker, initInstallPrompt } from './pwa.js';
+import { initTarot } from './tarot.js';
 
 function initNavigation() {
   const navBtns = document.querySelectorAll('.nav-btn');
@@ -41,6 +42,7 @@ function init() {
   initGallery();
   initModal();
   initBattle();
+  initTarot();
   initVisitorCounter();
   registerServiceWorker();
   initInstallPrompt();

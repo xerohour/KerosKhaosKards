@@ -70,8 +70,12 @@
         <span class="nav-icon">🌙</span>
         <span class="nav-label">Gallery</span>
       </button>
-      <button class="nav-btn" data-view="about" id="nav-about">
+      <button class="nav-btn" data-view="tarot" id="nav-tarot">
         <span class="nav-icon">🔮</span>
+        <span class="nav-label">Tarot</span>
+      </button>
+      <button class="nav-btn" data-view="about" id="nav-about">
+        <span class="nav-icon">📜</span>
         <span class="nav-label">About</span>
       </button>
     </nav>
@@ -176,50 +180,93 @@
         <div id="gallery-thumbnails" class="gallery-thumbnails"></div>
       </section>
 
-      <!-- About View -->
-      <section id="view-about" class="view">
-        <div class="about-content">
-          <div class="about-card glass-card">
-            <div class="geocities-divider" aria-hidden="true">
-              <span>☆</span><span>★</span><span>☆</span><span>★</span><span>☆</span>
-            </div>
-            <h2>About Kero's Khaos Kards</h2>
-            <div class="geocities-divider" aria-hidden="true">
-              <span>☆</span><span>★</span><span>☆</span><span>★</span><span>☆</span>
-            </div>
-            <p>Welcome, young magician! ✨</p>
-            <p>Kero's Khaos Kards is a magical card game inspired by the enchanted world of Card Captor Sakura. Collect all 72 mystical cards, each imbued with unique celestial energy!</p>
-            <div class="about-features">
-              <div class="feature-item">
-                <span class="feature-icon">🌸</span>
-                <h3>Collect</h3>
-                <p>Discover and collect all 72 enchanted cards</p>
-              </div>
-              <div class="feature-item">
-                <span class="feature-icon">⚔️</span>
-                <h3>Battle</h3>
-                <p>Draw cards and battle against magical opponents</p>
-              </div>
-              <div class="feature-item">
-                <span class="feature-icon">🌙</span>
-                <h3>Explore</h3>
-                <p>Browse your collection in the mystical gallery</p>
-              </div>
-            </div>
-            <div class="geocities-footer" aria-hidden="true">
-              <p class="blink">~ Best viewed with magical powers ~</p>
-              <p>Made with 💖 and ✨ | Est. 2026</p>
-              <div class="visitor-counter">
-                <span class="counter-label">Visitors:</span>
-                <span class="counter-digits" id="visitor-count">000042</span>
-              </div>
-              <p class="geocities-badge">
-                <span class="badge-text">🌐 Hosted on the Magical Web 🌐</span>
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+       <!-- About View -->
+       <section id="view-about" class="view">
+         <div class="about-content">
+           <div class="about-card glass-card">
+             <div class="geocities-divider" aria-hidden="true">
+               <span>☆</span><span>★</span><span>☆</span><span>★</span><span>☆</span>
+             </div>
+             <h2>About Kero's Khaos Kards</h2>
+             <div class="geocities-divider" aria-hidden="true">
+               <span>☆</span><span>★</span><span>☆</span><span>★</span><span>☆</span>
+             </div>
+             <p>Welcome, young magician! ✨</p>
+             <p>Kero's Khaos Kards is a magical card game inspired by the enchanted world of Card Captor Sakura. Collect all 72 mystical cards, each imbued with unique celestial energy!</p>
+             <div class="about-features">
+               <div class="feature-item">
+                 <span class="feature-icon">🌸</span>
+                 <h3>Collect</h3>
+                 <p>Discover and collect all 72 enchanted cards</p>
+               </div>
+               <div class="feature-item">
+                 <span class="feature-icon">⚔️</span>
+                 <h3>Battle</h3>
+                 <p>Draw cards and battle against magical opponents</p>
+               </div>
+               <div class="feature-item">
+                 <span class="feature-icon">🌙</span>
+                 <h3>Explore</h3>
+                 <p>Browse your collection in the mystical gallery</p>
+               </div>
+             </div>
+             <div class="geocities-footer" aria-hidden="true">
+               <p class="blink">~ Best viewed with magical powers ~</p>
+               <p>Made with 💖 and ✨ | Est. 2026</p>
+               <div class="visitor-counter">
+                 <span class="counter-label">Visitors:</span>
+                 <span class="counter-digits" id="visitor-count">000042</span>
+               </div>
+               <p class="geocities-badge">
+                 <span class="badge-text">🌐 Hosted on the Magical Web 🌐</span>
+               </p>
+             </div>
+           </div>
+         </div>
+       </section>
+
+       <!-- Tarot Spread View -->
+       <section id="view-tarot" class="view">
+         <div class="view-header">
+           <h2>🔮 Tarot Card Spreads 🔮</h2>
+         </div>
+         <div class="tarot-container">
+           <div class="tarot-controls">
+             <div class="spread-selector">
+               <label for="spread-type">Choose Spread:</label>
+               <select id="spread-type">
+                 <option value="1">1 Card Draw</option>
+                 <option value="3">3 Card Spread</option>
+                 <option value="5">5 Card Spread</option>
+                 <option value="8">8 Card Spread</option>
+                 <option value="celtic">Celtic Cross</option>
+                 <option value="custom">Custom Number</option>
+               </select>
+             </div>
+             <div class="custom-count" id="custom-count-container" style="display: none;">
+               <label for="custom-count">Number of Cards:</label>
+               <input type="number" id="custom-count" min="1" max="72" value="3">
+             </div>
+             <button id="shuffle-btn" class="magic-btn">🔀 Shuffle Deck</button>
+             <button id="draw-btn" class="magic-btn">🃏 Draw Cards</button>
+           </div>
+           
+           <div class="tarot-reading-area">
+             <div class="tarot-instructions">
+               <p>Click "Shuffle Deck" to randomize the card order, then "Draw Cards" to reveal your spread.</p>
+               <p>Click on any card to flip it and see its meaning!</p>
+             </div>
+             <div id="tarot-card-display" class="tarot-card-display">
+               <!-- Tarot cards will be dynamically inserted here -->
+             </div>
+           </div>
+           
+           <div class="tarot-interpretation" id="tarot-interpretation">
+             <h3>Card Interpretation</h3>
+             <div id="tarot-meaning">Select cards to see their meanings here.</div>
+           </div>
+         </div>
+       </section>
     </main>
 
     <!-- Card Modal -->
