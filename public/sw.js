@@ -1,8 +1,9 @@
-const CACHE_NAME = 'keros-khaos-kards-v1';
+const CACHE_NAME = 'keros-khaos-kards-v2';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
   '/manifest.json',
+  '/icons.svg',
 ];
 
 self.addEventListener('install', event => {

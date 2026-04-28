@@ -1,28 +1,7 @@
-function cardPath(num, side) {
-  const pad = String(num).padStart(2, '0');
-  return `/cards/card_${pad}_${side}.png`;
-}
+import cardData from './card-data.json';
+import { cardPath, getCardStats } from './utils.js';
 
-function getCardStats(num) {
-  // Simple deterministic stats based on card number
-  const seededRandom = (seed) => {
-    const x = Math.sin(seed) * 10000;
-    return x - Math.floor(x);
-  };
-
-  // Stats for Triple Triad (1-9)
-  const t = Math.floor(seededRandom(num * 1.1) * 9) + 1;
-  const r = Math.floor(seededRandom(num * 2.2) * 9) + 1;
-  const b = Math.floor(seededRandom(num * 3.3) * 9) + 1;
-  const l = Math.floor(seededRandom(num * 4.4) * 9) + 1;
-  
-  // Rank for Caravan sum (1-10)
-  const rank = Math.floor(seededRandom(num * 5.5) * 10) + 1;
-
-  return { t, r, b, l, rank };
-}
-
-export function initBattle(totalCards) {
+export function initBattle() {
   const btnStart = document.getElementById('btn-start');
   const btnReset = document.getElementById('btn-reset');
   const playerHandEl = document.getElementById('player-hand');
@@ -127,7 +106,7 @@ export function initBattle(totalCards) {
       } else {
         // Hide stats and show back face for opponent in hand
         const img = cardEl.querySelector('img');
-        if (img) img.src = cardPath(card.num, 'back');
+        if (img) img.src = cardPath(card, 'back');
         const stats = cardEl.querySelector('.card-stats');
         if (stats) stats.style.display = 'none';
         cardEl.classList.add('face-down');
@@ -138,7 +117,7 @@ export function initBattle(totalCards) {
 
   function createCardElement(card, options = {}) {
     const el = document.createElement('div');
-    el.className = 'game-card';
+    el.className = 'game-card' + (card.isFoil ? ' card-foil' : '');
     el.dataset.owner = card.owner || '';
     el.dataset.rank = String(card.stats.rank);
     if (card.owner === 'player') el.classList.add('owner-player');
@@ -146,7 +125,7 @@ export function initBattle(totalCards) {
     if (options.board) el.classList.add('board-card');
     if (options.recent) el.classList.add('recently-played');
     el.innerHTML = `
-      <img src="${cardPath(card.num, 'front')}" />
+      <img src="${cardPath(card, 'front')}" />
       <div class="card-rank-badge" aria-hidden="true">${card.stats.rank}</div>
       <div class="card-stats">
         <div class="stat-t">${card.stats.t}</div>
@@ -322,10 +301,12 @@ export function initBattle(totalCards) {
     gameState.playerHand = [];
     gameState.opponentHand = [];
     for (let i = 0; i < 5; i++) {
-      const pNum = Math.floor(Math.random() * totalCards) + 1;
-      const oNum = Math.floor(Math.random() * totalCards) + 1;
-      gameState.playerHand.push({ num: pNum, stats: getCardStats(pNum), owner: 'player' });
-      gameState.opponentHand.push({ num: oNum, stats: getCardStats(oNum), owner: 'opponent' });
+      const pIdx = Math.floor(Math.random() * cardData.length);
+      const oIdx = Math.floor(Math.random() * cardData.length);
+      const pCard = cardData[pIdx];
+      const oCard = cardData[oIdx];
+      gameState.playerHand.push({ ...pCard, stats: getCardStats(pCard), owner: 'player' });
+      gameState.opponentHand.push({ ...oCard, stats: getCardStats(oCard), owner: 'opponent' });
     }
 
     gameState.board = Array(9).fill(null);

@@ -1,0 +1,422 @@
+[
+  {
+    "num": 1,
+    "variant": "B",
+    "name": "Windy",
+    "isFoil": true,
+    "file": "card_01_b_foil.png"
+  },
+  {
+    "num": 2,
+    "variant": "",
+    "name": "Shadow",
+    "isFoil": true,
+    "file": "card_02_foil.png"
+  },
+  {
+    "num": 3,
+    "variant": "B",
+    "name": "Illusion",
+    "isFoil": true,
+    "file": "card_03_b_foil.png"
+  },
+  {
+    "num": 4,
+    "variant": "",
+    "name": "Flower",
+    "isFoil": true,
+    "file": "card_04_foil.png"
+  },
+  {
+    "num": 5,
+    "variant": "A",
+    "name": "Mist",
+    "isFoil": true,
+    "file": "card_05_a_foil.png"
+  },
+  {
+    "num": 6,
+    "variant": "",
+    "name": "Storm",
+    "isFoil": false,
+    "file": "card_06.png"
+  },
+  {
+    "num": 7,
+    "variant": "B",
+    "name": "Float",
+    "isFoil": true,
+    "file": "card_07_b_foil.png"
+  },
+  {
+    "num": 8,
+    "variant": "",
+    "name": "Fight",
+    "isFoil": true,
+    "file": "card_08_foil.png"
+  },
+  {
+    "num": 9,
+    "variant": "A",
+    "name": "Song",
+    "isFoil": false,
+    "file": "card_09_a.png"
+  },
+  {
+    "num": 10,
+    "variant": "",
+    "name": "Shot",
+    "isFoil": true,
+    "file": "card_10_foil.png"
+  },
+  {
+    "num": 11,
+    "variant": "",
+    "name": "Sweet",
+    "isFoil": true,
+    "file": "card_11_foil.png"
+  },
+  {
+    "num": 12,
+    "variant": "B",
+    "name": "Freeze",
+    "isFoil": true,
+    "file": "card_12_b_foil.png"
+  },
+  {
+    "num": 13,
+    "variant": "",
+    "name": "Arrow",
+    "isFoil": true,
+    "file": "card_13_foil.png"
+  },
+  {
+    "num": 14,
+    "variant": "A",
+    "name": "Dark",
+    "isFoil": true,
+    "file": "card_14_a_foil.png"
+  },
+  {
+    "num": 14,
+    "variant": "B",
+    "name": "Dark",
+    "isFoil": true,
+    "file": "card_14_b_foil.png"
+  },
+  {
+    "num": 15,
+    "variant": "A",
+    "name": "Light",
+    "isFoil": true,
+    "file": "card_15_a_foil.png"
+  },
+  {
+    "num": 15,
+    "variant": "B",
+    "name": "Light",
+    "isFoil": true,
+    "file": "card_15_b_foil.png"
+  },
+  {
+    "num": 16,
+    "variant": "",
+    "name": "Twin",
+    "isFoil": true,
+    "file": "card_16_foil.png"
+  },
+  {
+    "num": 17,
+    "variant": "",
+    "name": "Wood",
+    "isFoil": true,
+    "file": "card_17_foil.png"
+  },
+  {
+    "num": 18,
+    "variant": "",
+    "name": "Shield",
+    "isFoil": true,
+    "file": "card_18_foil.png"
+  },
+  {
+    "num": 19,
+    "variant": "",
+    "name": "Power",
+    "isFoil": true,
+    "file": "card_19_foil.png"
+  },
+  {
+    "num": 20,
+    "variant": "",
+    "name": "Loop",
+    "isFoil": true,
+    "file": "card_20_foil.png"
+  },
+  {
+    "num": 21,
+    "variant": "A",
+    "name": "Mirror",
+    "isFoil": true,
+    "file": "card_21_a_foil.png"
+  },
+  {
+    "num": 21,
+    "variant": "B",
+    "name": "Mirror",
+    "isFoil": false,
+    "file": "card_21_b.png"
+  },
+  {
+    "num": 22,
+    "variant": "",
+    "name": "Big",
+    "isFoil": true,
+    "file": "card_22_foil.png"
+  },
+  {
+    "num": 23,
+    "variant": "",
+    "name": "Change",
+    "isFoil": true,
+    "file": "card_23_foil.png"
+  },
+  {
+    "num": 24,
+    "variant": "A",
+    "name": "Firey",
+    "isFoil": true,
+    "file": "card_24_a_foil.png"
+  },
+  {
+    "num": 24,
+    "variant": "B",
+    "name": "Firey",
+    "isFoil": false,
+    "file": "card_24_b.png"
+  },
+  {
+    "num": 25,
+    "variant": "",
+    "name": "Voice",
+    "isFoil": true,
+    "file": "card_25_foil.png"
+  },
+  {
+    "num": 26,
+    "variant": "B",
+    "name": "Lock",
+    "isFoil": true,
+    "file": "card_26_b_foil.png"
+  },
+  {
+    "num": 27,
+    "variant": "",
+    "name": "Cloud",
+    "isFoil": true,
+    "file": "card_27_foil.png"
+  },
+  {
+    "num": 28,
+    "variant": "",
+    "name": "Rain",
+    "isFoil": true,
+    "file": "card_28_foil.png"
+  },
+  {
+    "num": 29,
+    "variant": "B",
+    "name": "Waterey",
+    "isFoil": false,
+    "file": "card_29_b.png"
+  },
+  {
+    "num": 30,
+    "variant": "",
+    "name": "Jump",
+    "isFoil": true,
+    "file": "card_30_foil.png"
+  },
+  {
+    "num": 31,
+    "variant": "",
+    "name": "Silent",
+    "isFoil": true,
+    "file": "card_31_foil.png"
+  },
+  {
+    "num": 32,
+    "variant": "",
+    "name": "Time",
+    "isFoil": true,
+    "file": "card_32_foil.png"
+  },
+  {
+    "num": 33,
+    "variant": "A",
+    "name": "Return",
+    "isFoil": true,
+    "file": "card_33_a_foil.png"
+  },
+  {
+    "num": 34,
+    "variant": "A",
+    "name": "Erase",
+    "isFoil": false,
+    "file": "card_34_a.png"
+  },
+  {
+    "num": 34,
+    "variant": "B",
+    "name": "Erase",
+    "isFoil": false,
+    "file": "card_34_b.png"
+  },
+  {
+    "num": 35,
+    "variant": "",
+    "name": "Dash",
+    "isFoil": true,
+    "file": "card_35_foil.png"
+  },
+  {
+    "num": 36,
+    "variant": "",
+    "name": "Create",
+    "isFoil": true,
+    "file": "card_36_foil.png"
+  },
+  {
+    "num": 37,
+    "variant": "",
+    "name": "Sleep",
+    "isFoil": true,
+    "file": "card_37_foil.png"
+  },
+  {
+    "num": 38,
+    "variant": "",
+    "name": "Bubbles",
+    "isFoil": true,
+    "file": "card_38_foil.png"
+  },
+  {
+    "num": 39,
+    "variant": "",
+    "name": "Wave",
+    "isFoil": false,
+    "file": "card_39.png"
+  },
+  {
+    "num": 40,
+    "variant": "",
+    "name": "Sand",
+    "isFoil": true,
+    "file": "card_40_foil.png"
+  },
+  {
+    "num": 41,
+    "variant": "",
+    "name": "Fly",
+    "isFoil": true,
+    "file": "card_41_foil.png"
+  },
+  {
+    "num": 42,
+    "variant": "",
+    "name": "Thunder",
+    "isFoil": true,
+    "file": "card_42_foil.png"
+  },
+  {
+    "num": 43,
+    "variant": "",
+    "name": "Sword",
+    "isFoil": true,
+    "file": "card_43_foil.png"
+  },
+  {
+    "num": 44,
+    "variant": "",
+    "name": "Move",
+    "isFoil": true,
+    "file": "card_44_foil.png"
+  },
+  {
+    "num": 45,
+    "variant": "A",
+    "name": "Glow",
+    "isFoil": true,
+    "file": "card_45_a_foil.png"
+  },
+  {
+    "num": 46,
+    "variant": "",
+    "name": "Little",
+    "isFoil": true,
+    "file": "card_46_foil.png"
+  },
+  {
+    "num": 47,
+    "variant": "A",
+    "name": "Maze",
+    "isFoil": true,
+    "file": "card_47_a_foil.png"
+  },
+  {
+    "num": 48,
+    "variant": "B",
+    "name": "Snow",
+    "isFoil": true,
+    "file": "card_48_b_foil.png"
+  },
+  {
+    "num": 49,
+    "variant": "A",
+    "name": "Through",
+    "isFoil": true,
+    "file": "card_49_a_foil.png"
+  },
+  {
+    "num": 50,
+    "variant": "A",
+    "name": "Libra",
+    "isFoil": true,
+    "file": "card_50_a_foil.png"
+  },
+  {
+    "num": 51,
+    "variant": "B",
+    "name": "Dream",
+    "isFoil": true,
+    "file": "card_51_b_foil.png"
+  },
+  {
+    "num": 52,
+    "variant": "A",
+    "name": "Earthy",
+    "isFoil": true,
+    "file": "card_52_a_foil.png"
+  },
+  {
+    "num": 53,
+    "variant": "B",
+    "name": "Nothing",
+    "isFoil": true,
+    "file": "card_53_b_foil.png"
+  },
+  {
+    "num": 54,
+    "variant": "",
+    "name": "Nameless",
+    "isFoil": false,
+    "file": "card_54.png"
+  },
+  {
+    "num": 55,
+    "variant": "",
+    "name": "Hope",
+    "isFoil": true,
+    "file": "card_55_foil.png"
+  }
+]

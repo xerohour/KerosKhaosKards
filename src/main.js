@@ -4,8 +4,6 @@ import { initCardGrid, initGallery, initModal } from './cards.js';
 import { initBattle } from './battle.js';
 import { registerServiceWorker, initInstallPrompt } from './pwa.js';
 
-const TOTAL_CARDS = 72;
-
 function initNavigation() {
   const navBtns = document.querySelectorAll('.nav-btn');
   const views = document.querySelectorAll('.view');
@@ -39,13 +37,21 @@ function initVisitorCounter() {
 function init() {
   createSakuraPetals();
   initNavigation();
-  initCardGrid(TOTAL_CARDS);
-  initGallery(TOTAL_CARDS);
+  initCardGrid();
+  initGallery();
   initModal();
-  initBattle(TOTAL_CARDS);
+  initBattle();
   initVisitorCounter();
   registerServiceWorker();
   initInstallPrompt();
+
+  // Hide loading overlay
+  const loading = document.getElementById('loading-overlay');
+  if (loading) {
+    setTimeout(() => {
+      loading.classList.add('hidden');
+    }, 1000); // Small delay for effect
+  }
 }
 
 if (document.readyState === 'loading') {
