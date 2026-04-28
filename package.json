@@ -2,6 +2,7 @@
   "name": "keroskhaoskards",
   "version": "1.0.0",
   "private": true,
+  "homepage": "https://xerohour.github.io/KerosKhaosKards/",
   "type": "module",
   "description": "Kero's Khaos Kards - A magical girl themed card game web app (PWA)",
   "scripts": {
